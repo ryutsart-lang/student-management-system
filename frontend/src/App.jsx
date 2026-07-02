@@ -7,6 +7,7 @@ import { RegisterPage } from './pages/RegisterPage';
 import { StudentDashboard } from './pages/StudentDashboard';
 import { AdminDashboard } from './pages/AdminDashboard';
 import { AdminPage } from './pages/AdminPage';
+import { StudentProfilePage } from './pages/StudentProfilePage';
 import './index.css';
 
 function AppRoutes() {
@@ -16,22 +17,9 @@ function AppRoutes() {
     <Routes>
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
-      <Route
-        path="/dashboard"
-        element={
-          <ProtectedRoute>
-            {user?.role === 'admin' ? <AdminDashboard /> : <StudentDashboard />}
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/admin"
-        element={
-          <ProtectedRoute requiredRole="admin">
-            <AdminPage />
-          </ProtectedRoute>
-        }
-      />
+      <Route path="/dashboard" element={<ProtectedRoute>{user?.role === 'admin' ? <AdminDashboard /> : <StudentDashboard />}</ProtectedRoute>} />
+      <Route path="/admin" element={<ProtectedRoute requiredRole="admin"><AdminPage /></ProtectedRoute>} />
+      <Route path="/student/:student_id" element={<ProtectedRoute requiredRole="admin"><StudentProfilePage /></ProtectedRoute>} />
       <Route path="/" element={<Navigate to="/dashboard" />} />
     </Routes>
   );
